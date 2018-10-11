@@ -27,6 +27,9 @@
     <ClCompile Include="write_media.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="close_media.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add_stream.h">
@@ -36,6 +39,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="write_media.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="close_media.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

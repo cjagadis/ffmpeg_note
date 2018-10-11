@@ -4,14 +4,7 @@
 static void fill_yuv_image(AVFrame *frame, int frame_index, int width, int height, FILE *fp) {
 	int x, y, i;
 	i = frame_index;
-
-	char name[16] = { 0 };
 	uint8_t tmp = 0;
-	sprintf(name, "%d.yuv", frame_index);
-	/*FILE *fp = fopen(name, "w+");
-	if (NULL == fp) {
-		printf("open file %s failed, %s.\n", fp, strerror(errno));
-	}*/
 
 	//Y
 	for (y = 0; y < height;y++) {
@@ -37,7 +30,6 @@ static void fill_yuv_image(AVFrame *frame, int frame_index, int width, int heigh
 		}
 	}
 
-	//fclose(fp);
 }
 
 
@@ -148,11 +140,6 @@ static AVFrame *get_audio_frame(OutputStream *ost) {
 
 	char audio_name[16] = {0};
 	sprintf(audio_name, "%d.pcm", audio_cnt++);
-	/*FILE *fp = NULL;
-	fp = fopen(audio_name, "w+");
-	if (NULL == fp) {
-		printf("open file %s faile: %s.\n", audio_name, strerror(errno));
-	}*/
 	
 	for (j = 0; j < frame->nb_samples; j++) {
 		v = (int)(sin(ost->t) * 10000);
@@ -167,7 +154,6 @@ static AVFrame *get_audio_frame(OutputStream *ost) {
 	frame->pts = ost->next_pts;
 	ost->next_pts += frame->nb_samples;
 
-	//fclose(fp);
 
 	return frame;
 }

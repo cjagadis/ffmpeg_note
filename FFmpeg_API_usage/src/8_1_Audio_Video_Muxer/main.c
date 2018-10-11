@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "write_media.h"
+#include "close_media.h"
 
 #pragma comment(lib, "avformat.lib")
 #pragma comment(lib, "avcodec.lib")
@@ -141,17 +141,13 @@ int main(int argc, char *argv[]) {
 	//10. 写入文件尾 write the trailer
 	av_write_trailer(oc);
 
-	//11.关闭codec
+	//11.关闭每一个codec
 	if (have_audio) {
-		//avcodec_free_context(audio_c);
-		//av_frame_free(audio_frame);
-		//sws_freeContext();
-		//swr_free(swr_ctx);
+		close_stream(oc, &audio_st);
 	}
 
 	if (have_video) {
-		//avcodec_free_context(video_c);
-		//av_frame_free(video_frame);
+		close_stream(oc, &video_st);
 	}
 
 	if (!(out_fmt->flags & AVFMT_NOFILE)) {

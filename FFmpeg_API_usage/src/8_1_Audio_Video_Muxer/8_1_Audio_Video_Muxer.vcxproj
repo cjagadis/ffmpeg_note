@@ -146,12 +146,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="add_stream.c" />
+    <ClCompile Include="close_media.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="open_media.c" />
     <ClCompile Include="write_media.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="add_stream.h" />
+    <ClInclude Include="close_media.h" />
     <ClInclude Include="open_media.h" />
     <ClInclude Include="write_media.h" />
   </ItemGroup>
