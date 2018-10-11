@@ -9,6 +9,22 @@
 #pragma comment(lib, "swresample.lib")
 #pragma comment(lib, "swscale.lib")
 
+wave_pcm_hdr default_wav_hdr = {
+	{ 'R','I','F','F' },
+	0,
+	{ 'W', 'A', 'V', 'E' },
+	{ 'f', 'm', 't', ' ' },
+	16,
+	1,       // pcm: 1
+	2,       // channels: 2
+	44100,   // 采样率
+	88200,   // 每秒字节数: 44100 * 16  / 8
+	2,       // 16 / 8
+	16,      // 每个采样点占用比特数
+	{ 'd', 'a', 't', 'a' },
+	0
+};
+
 int main(int argc, char *argv[]) {
 	const char *filename = "test.flv";
 
@@ -108,7 +124,9 @@ int main(int argc, char *argv[]) {
 
 	//9.写入帧数据
 	static int cnt = 0;
-	audio_st.fp_out = fopen("out.pcm", "w+");
+	audio_st.fp_out = fopen("out.wav", "w+");
+	audio_st.wav_hdr = default_wav_hdr;
+	fwrite( &audio_st.wav_hdr, sizeof(wave_pcm_hdr), 1, audio_st.fp_out);
 	if (audio_st.fp_out == NULL) {
 		printf("open out.pcm failed: %s.\n", strerror(errno));
 	}
@@ -134,7 +152,16 @@ int main(int argc, char *argv[]) {
 			break;
 	}
 
+	/*修正wav文件头数据的大小*/
+	audio_st.wav_hdr.size_8 += audio_st.wav_hdr.data_size + sizeof(wave_pcm_hdr) - 8;
+	/*将修正过的数据写回wav文件头部*/
+	fseek(audio_st.fp_out, 4, 0);
+	fwrite(&audio_st.wav_hdr.size_8, sizeof(audio_st.wav_hdr.size_8), 1, audio_st.fp_out);
+	//将文件指针偏移到存储data_size的位置
+	fseek(audio_st.fp_out, 40, 0);
+	fwrite(&audio_st.wav_hdr.data_size, sizeof(audio_st.wav_hdr.data_size), 1, audio_st.fp_out);
 	fclose(audio_st.fp_out);
+
 	fclose(video_st.fp_out);
 
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <libavformat\avformat.h>
 #include <libswscale\swscale.h>
-//#include <libswresample\swresample.h>
+#include "wav.h"
 
 #define STREAM_FRAME_RATE 25  // 25 image per second
 #define STREAM_PIX_FMT AV_PIX_FMT_YUV420P  //defualt pixel format
@@ -25,6 +25,7 @@ typedef struct OutputStream {
 	struct SwrContext *swr_ctx;
 
 	FILE *fp_out;
+	wave_pcm_hdr wav_hdr;
 }OutputStream;
 
 void add_stream(OutputStream *out_st, AVFormatContext *oc, AVCodec **codec, enum AVCodecID codec_id);

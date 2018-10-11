@@ -33,7 +33,6 @@ static void fill_yuv_image(AVFrame *frame, int frame_index, int width, int heigh
 }
 
 
-
 static AVFrame *get_video_frame(OutputStream *ost) {
 	AVCodecContext *c = ost->st->codec;
 
@@ -138,14 +137,12 @@ static AVFrame *get_audio_frame(OutputStream *ost) {
 		return NULL;
 	}
 
-	char audio_name[16] = {0};
-	sprintf(audio_name, "%d.pcm", audio_cnt++);
-	
 	for (j = 0; j < frame->nb_samples; j++) {
 		v = (int)(sin(ost->t) * 10000);
 		for (i = 0; i < ost->st->codec->channels; i++) {
 			*q++ = v;
-			fwrite(&v,1, 1, ost->fp_out);
+			fwrite(&v, 2, 1, ost->fp_out);
+			ost->wav_hdr.data_size += 2;
 		}
 		ost->t      += ost->tincr;
 		ost->tincr  += ost->tincr2;

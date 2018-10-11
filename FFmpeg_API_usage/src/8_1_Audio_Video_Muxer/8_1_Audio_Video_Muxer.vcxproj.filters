@@ -44,5 +44,8 @@
     <ClInclude Include="close_media.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="wav.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

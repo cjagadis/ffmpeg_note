@@ -155,6 +155,7 @@
     <ClInclude Include="add_stream.h" />
     <ClInclude Include="close_media.h" />
     <ClInclude Include="open_media.h" />
+    <ClInclude Include="wav.h" />
     <ClInclude Include="write_media.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
